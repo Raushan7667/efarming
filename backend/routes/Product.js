@@ -1,0 +1,48 @@
+const express = require('express');
+const router = express.Router()
+const {
+    createCategory,
+    getCategories,
+    getCategoryById,
+    createParentCategory,
+    getAllParentCategories,
+    getParentCategoryById,
+
+} = require('../controller/Category');
+const { auth, isAdmin, isUser } = require('../middleware/auth');
+const { createProduct,
+    getProductById,
+    getAllProducts,
+    getProductsByParentCategory,
+    getProductsByCategory } = require('../controller/Product');
+
+
+router.post('/createparentcategory', auth, isAdmin, createParentCategory)
+router.get('/getallparentcategory', getAllParentCategories)
+router.get('/getonecategory', getParentCategoryById)
+router.post("/createcategory", auth, isAdmin, createCategory)
+router.get('/getCategory', getCategories)
+router.get('/particularcreatecategory', getCategoryById)
+
+
+router.post("/createproduct", auth, isAdmin, createProduct)
+router.get('/getproductbyId/:productId', getProductById)
+router.get('/getallproduct', getAllProducts)
+router.get('/getproductbyparentcategory', getProductsByParentCategory)
+router.get('/getproductbycategory', getProductsByCategory)
+
+
+
+
+const { addToProductToCart,
+    getCartItems,
+    removeCartItem } = require('../controller/AddToCart');
+
+router.post('/addtocart', auth, isUser, addToProductToCart)
+router.get('/cartitems', auth, isUser, getCartItems)
+router.delete('/removeitem/:id', auth, isUser, removeCartItem)
+
+
+
+
+module.exports = router;
