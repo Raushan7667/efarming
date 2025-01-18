@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
+import axios from 'axios';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -9,8 +10,25 @@ const Login = () => {
     rememberMe: false
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    try {
+      let response=await axios.post("http://localhost:4000/api/v1/auth/login",{
+        email: formData.email,
+        password: formData.password
+      })
+      if(response.status){
+        // set token in local storage
+        localStorage.setItem("token",response.data.token)
+        // navigate to home page
+        window.location.href="/"
+      }
+      console.log("response during login",response)
+
+      
+    } catch (error) {
+      
+    }
     console.log('Form submitted:', formData);
   };
 

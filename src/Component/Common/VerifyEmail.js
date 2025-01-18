@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom';
 
@@ -26,6 +27,7 @@ const VerifyEmail = () => {
     const [enterotp, setEnterOtp] = useState(['', '', '', '', '', '']);
     const [status, setStatus] = useState('idle');
     const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
   
     const handleOtpChange = (index, value) => {
@@ -53,8 +55,12 @@ const VerifyEmail = () => {
       }
     };
   
-    const handleSubmit = async (e) => {
+    const handleSubmit = async(e) => {
       e.preventDefault();
+
+      try {
+        
+     
       const otpString = enterotp.join('');
       
       if (otpString.length !== 6) {
@@ -67,19 +73,38 @@ const VerifyEmail = () => {
       setMessage('Verifying your code...');
   
       // Simulate API call
-      setTimeout(() => {
+     
         if (otpString === otp) {
           setStatus('success');
           setMessage('Verification successful!');
-
+           
+               setLoading(true)
           // Redirect to dashboard after successful verification
-          // Example: history.push('/dashboard');
+          console.log("conferm password",formData.confirmPassword)
+          let response =await axios.post("http://localhost:4000/api/v1/auth/signup",{
+            email: formData.email,
+            password: formData.password,
+            confermPassword: formData.confirmPassword,
+            Name: formData.fullName,
+            accountType:formData.accountType,
+            otp: otpString,
+          
+          })
+          setLoading(false)
+           window.location.href="/login"
+          console.log("response of signup",response);
           
         } else {
           setStatus('error');
           setMessage('Invalid verification code. Please try again.');
         }
-      }, 1500);
+     
+    } catch (error) {
+      console.error(error);
+      setStatus('error');
+      setMessage('Failed to verify your code. Please try again.');
+        
+    }
     };
   
     const handleResend = () => {

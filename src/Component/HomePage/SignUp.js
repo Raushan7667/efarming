@@ -125,9 +125,9 @@ const SignUp = () => {
                             onChange={(e) => setFormData({ ...formData, accountType: e.target.value })}
                         >
                             <option value="">Select account type</option>
-                            <option value="individual">Individual</option>
-                            <option value="business">Business</option>
-                            <option value="enterprise">Enterprise</option>
+                            <option value="user">user</option>
+                            <option value="business">Farmer</option>
+                            <option value="enterprise">Seller</option>
                         </select>
                     </div>
 
