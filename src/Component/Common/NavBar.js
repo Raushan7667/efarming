@@ -1,10 +1,34 @@
-import { Bell, Search, ShoppingCart, User } from 'lucide-react';
+import axios from 'axios';
+import { Bell, Search, Server, ShoppingCart, User } from 'lucide-react';
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const NavBar = () => {
-  const [logedIn, setIslogedIn] = useState(false);
+
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [userImage, setUserImage] = useState({});
+  const token = localStorage?.getItem('token');
+  console.log("token is ", token)
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  // get user frrom token
+  if (token) {
+    // api call to get user frrom token
+    const getUserByToken = async () => {
+      // api call to get user frrom token
+      let response = await axios.get("http://localhost:4000/api/v1/auth/getuserbytoken", config)
+      console.log("user by token: ", response)
+      setUserImage(response.data.user.image)
+    }
+    getUserByToken();
+
+  }
+
 
   // Track the active section
   const [activeSection, setActiveSection] = useState('home');
@@ -64,7 +88,7 @@ const NavBar = () => {
                   Product
                 </Link>
               </li>
-              {!logedIn && (
+              {token == null && (
                 <div className="flex gap-5">
                   <li>
                     <Link to="/signup" className="hover:text-gray-200 font-bold">
@@ -78,6 +102,29 @@ const NavBar = () => {
                   </li>
                 </div>
               )}
+              {
+                token != null && (
+                  <div className="flex gap-5 items-center">
+                    <li>
+                      <Link to="/profile" className="hover:text-gray-200 font-bold">
+                        <img
+                          src={userImage}
+                          alt="User Profile"
+                          className="w-8 h-8 rounded-full object-cover z-30"
+                        />
+                      </Link>
+
+                    </li>
+                    <li>
+                      <Link to="/server" className="hover:text-gray-200 font-bold">
+                        <Server className="w-5 h-5" />
+                      </Link>
+
+
+                    </li>
+                  </div>
+                )}
+
             </ul>
 
             {/* Mobile Menu Toggle */}
@@ -120,8 +167,8 @@ const NavBar = () => {
                     Product
                   </Link>
                 </li>
-                {!logedIn && (
-                  <>
+                {token == null && (
+                  <div className="flex gap-5">
                     <li>
                       <Link to="/signup" className="hover:text-gray-200 font-bold">
                         SignUp
@@ -132,8 +179,27 @@ const NavBar = () => {
                         Login
                       </Link>
                     </li>
-                  </>
+                  </div>
                 )}
+                {
+                  token != null && (
+                    <div className="flex gap-5">
+                      <li>
+                        <Link to="/profile" className="hover:text-gray-200 font-bold">
+                          <User className="w-5 h-5" />
+                        </Link>
+
+                      </li>
+                      <li>
+                        <Link to="/server" className="hover:text-gray-200 font-bold">
+                          <Server className="w-5 h-5" />
+                        </Link>
+
+
+                      </li>
+                    </div>
+                  )}
+
               </ul>
             </div>
           )}
