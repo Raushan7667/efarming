@@ -262,7 +262,7 @@ exports.getUserById=async (req,res)=>{
 
 exports.getUserByToken=async (req,res)=>{
     try {
-        const token=req.cookies.token
+        const token = req.header('Authorization')?.replace('Bearer ', '');
         if(!token){
             return res.status(401).json({
                 success:false,
