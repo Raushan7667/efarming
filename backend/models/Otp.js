@@ -25,7 +25,7 @@ async function sendVerificationmail(email, otp) {
         	// Create a transporter to send emails
 
 	// Define the email options
-        const mailResponse = await mailSender(email, "Verfication mail from StudyNotion",emailTemplate(otp));
+        const mailResponse = await mailSender(email, "Verfication mail from eFarming",emailTemplate(otp));
         console.log("Email Sent Succesfully",mailResponse);
     } catch (error) {
         console.log("Error occour at sending email")
