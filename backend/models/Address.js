@@ -5,14 +5,11 @@ const addressSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users',
    },
-  firstName: {
+  Name: {
     type: String,
     required: true,
   },
-  lastName: {
-    type: String,
-    required: true,
-  },
+
   streetAddress: {
     type: String,
     required: true,

@@ -5,8 +5,8 @@ const Address = require('../models/Address')
 exports.createAddress = async (req, res) => {
     try {
         const userId = req.user.id
-        const { firstName,
-            lastName,
+        const { Name,
+           
             streetAddress,
             city,
             state,
@@ -17,8 +17,8 @@ exports.createAddress = async (req, res) => {
         // const existingAddress = await Address.findOne({ userId })
 
         const newAddress = new Address({
-            firstName,
-            lastName,
+            Name,
+          
             userId,
             streetAddress,
             city,

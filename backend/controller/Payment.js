@@ -21,7 +21,7 @@ exports.createPaymentLink = async (req, res) => {
             amount: order.totalAmount*100,  // Ensure this is in paise (100 = 1 INR)
             currency: 'INR',
             customer: {
-                name: user.firstName + ' ' + user.lastName,
+                name: user.Name,
                 email: user.email,
                 contact: "7633020372",  // You can also get this from the User model
             },

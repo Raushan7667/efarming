@@ -65,8 +65,8 @@ exports.SendOtp=async (req,res)=>{
 exports.SignUp=async (req,res)=>{
     try {
         // data fetch from request body
-        const { firstName,
-            lastName,
+        const { Name,
+     
             email,
             password,
             confermPassword,
@@ -74,9 +74,9 @@ exports.SignUp=async (req,res)=>{
             accountType
         } = req.body
 
-        console.log("in authentication ",firstName, lastName, email, password, otp, accountType,confermPassword)
+        console.log("in authentication ",Name,  email, password, otp, accountType,confermPassword)
         // validate karo lo
-        if (!firstName || !lastName || !email || !password || !confermPassword || !otp) {
+        if (!Name ||  !email || !password || !confermPassword || !otp) {
             return res.status(403).json({
                 success: false,
                 message: "All field are reqired"
@@ -131,13 +131,13 @@ exports.SignUp=async (req,res)=>{
         })
         // create entry in database
         const user = await User.create({
-            firstName,
-            lastName,
+            Name,
+           
             email,
             password: hashedPassword,
             accountType,
             additionalDetail: profileDetails._id,
-            image: `https:api.dicebear.com/8.x/initials/svg?seed=${firstName}${lastName}`,
+            image: `https:api.dicebear.com/8.x/initials/svg?seed=${Name}`,
         })
 
         // return res
