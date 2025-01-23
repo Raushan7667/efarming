@@ -89,7 +89,7 @@ exports.createParentCategory=async(req,res)=>{
 
 exports.getAllParentCategories=async(req,res)=>{
     try {
-        const parentCategories=await ParenstCategory.find()
+        const parentCategories=await ParenstCategory.find().populate("subcategories")
         res.status(200).json({
             success: true,
             data: parentCategories,
@@ -110,7 +110,18 @@ exports.getAllParentCategories=async(req,res)=>{
 exports.getParentCategoryById=async(req,res)=>{
     try {
         const {parentCategoryId}=req.body
-        const parentCategory=await ParenstCategory.findById(parentCategoryId).populate("subcategories").exec()
+        console.log("parent category id",parentCategoryId)
+        const parentCategory = await ParenstCategory.findById(parentCategoryId)
+    .populate({
+        path: "subcategories",
+        populate: {
+            path: "product",
+//        select: "name price description"   Only select these fields from products
+            // You can also add match if needed:
+            // match: { price: { $gt: 100 } }
+        }
+    })
+    .exec();
         if(!parentCategory){
             return res.status(404).json({
                 success: false,
