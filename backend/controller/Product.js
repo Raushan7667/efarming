@@ -18,6 +18,7 @@ exports.createProduct = async (req, res) => {
             description,
             tag: _tag,
             badges,
+            fullShopDetails
 
         } = req.body
 
@@ -43,7 +44,9 @@ exports.createProduct = async (req, res) => {
             !category ||
             !description||
             !badges||
-            !tag
+            !tag ||
+            !fullShopDetails
+
            
             ) {
             return res.status(400).json(
