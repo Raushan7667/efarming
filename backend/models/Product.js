@@ -1,5 +1,9 @@
 const mongoose = require('mongoose')
 const producrSchema = new mongoose.Schema({
+    fullShopDetails:{
+        type:String,
+        required:true,
+    },
     name: {
         type: String,
         required: true,
