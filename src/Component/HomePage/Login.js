@@ -20,6 +20,9 @@ const Login = () => {
       if(response.status){
         // set token in local storage
         localStorage.setItem("token",response.data.token)
+    
+     
+     
         // navigate to home page
         window.location.href="/"
       }
