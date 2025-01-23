@@ -26,7 +26,7 @@ exports.auth=async(req,res,next)=>{
 exports.isUser=async(req,res,next)=>{
     console.log("user role ",req.user.accountType)
     try {
-        if(req.user.accountType!='user'){
+        if(req.user.accountType!='User'){
             return res.status(401).json({
                 success: false,
                 message: "this is protected route for user only"
@@ -37,6 +37,26 @@ exports.isUser=async(req,res,next)=>{
     } catch (error) {
         console.error("Error in isUser middleware", error)
         res.status(500).json({msg:"User Role Not Verified"})
+    }
+}
+
+// isSeller
+exports.isSeller=async(req,res,next)=>{
+    console.log("User Role",req.user.accountType)
+    try{
+        if(req.user.accountType!="Seller"){
+            return res.status(401).json({
+                success: false,
+                message: "this is protected route for Seller only"
+            })
+
+        }
+        next()
+
+    }catch(error){
+        console.error("Error in isSeller middleware", error)
+        res.status(500).json({msg:"Seller Role Not Verified"})
+
     }
 }
 
