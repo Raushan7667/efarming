@@ -1,14 +1,19 @@
 import axios from 'axios';
-import { Bell, Search, Server, ShoppingCart, User } from 'lucide-react';
+import { Bell, Search, Server, ShoppingCart, Store, User } from 'lucide-react';
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
 
   const [mobileMenu, setMobileMenu] = useState(false);
   const [userImage, setUserImage] = useState({});
+  const[userRole, setUserRole] = useState("")
+  //localStorage.removeItem('token')
   const token = localStorage?.getItem('token');
-  console.log("token is ", token)
+  const navigate=useNavigate()
+ 
+  console.log("token is in navbar", token)
+ 
 
   const config = {
     headers: {
@@ -24,6 +29,7 @@ const NavBar = () => {
       let response = await axios.get("http://localhost:4000/api/v1/auth/getuserbytoken", config)
       console.log("user by token: ", response)
       setUserImage(response.data.user.image)
+      setUserRole(response.data.user.accountType)
     }
     getUserByToken();
 
@@ -41,7 +47,7 @@ const NavBar = () => {
     if (path.startsWith('/product')) {
       setActiveSection('product');
     } else {
-      setActiveSection('home');
+      setActiveSection('');
     }
   }, [location]);
 
@@ -83,7 +89,7 @@ const NavBar = () => {
                   Contact
                 </Link>
               </li>
-              <li onClick={() => setActiveSection('product')}>
+              <li>
                 <Link to="/product" className="hover:text-gray-200">
                   Product
                 </Link>
@@ -162,7 +168,7 @@ const NavBar = () => {
                     Contact
                   </Link>
                 </li>
-                <li onClick={() => setActiveSection('product')}>
+                <li>
                   <Link to="/product" className="hover:text-gray-200">
                     Product
                   </Link>
@@ -244,6 +250,16 @@ const NavBar = () => {
                 <Bell className="w-5 h-5" />
                 <span>Notification</span>
               </div>
+              {
+                userRole==="User"&&
+              
+              <div className="flex items-center gap-2 cursor-pointer hover:text-gray-200" onClick={()=>{
+               navigate("/seller")
+              }}>
+                <Store className="w-5 h-5" />
+                <span>Sell Now</span>
+              </div>
+            }
             </div>
           </div>
         </div>
