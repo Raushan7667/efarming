@@ -9,7 +9,7 @@ const {
     getParentCategoryById,
 
 } = require('../controller/Category');
-const { auth, isAdmin, isUser } = require('../middleware/auth');
+const { auth, isAdmin, isUser, isSeller } = require('../middleware/auth');
 const { createProduct,
     getProductById,
     getAllProducts,
@@ -19,13 +19,13 @@ const { createProduct,
 
 router.post('/createparentcategory', auth, isAdmin, createParentCategory)
 router.get('/getallparentcategory', getAllParentCategories)
-router.get('/getonecategory', getParentCategoryById)
+router.post('/getonecategory', getParentCategoryById)
 router.post("/createcategory", auth, isAdmin, createCategory)
 router.get('/getCategory', getCategories)
 router.get('/particularcreatecategory', getCategoryById)
 
 
-router.post("/createproduct", auth, isAdmin, createProduct)
+router.post("/createproduct", auth, isSeller, createProduct)
 router.get('/getproductbyId/:productId', getProductById)
 router.get('/getallproduct', getAllProducts)
 router.get('/getproductbyparentcategory', getProductsByParentCategory)
