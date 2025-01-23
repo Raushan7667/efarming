@@ -3,6 +3,7 @@ import Typed from 'typed.js';
 import HeroSection from './HeroSection';
 import Service from './Service';
 import Technique from './Technique';
+import NavBar from '../Common/NavBar';
 
 const Home = () => {
 
@@ -33,6 +34,7 @@ const Home = () => {
 
   return (
     <div>
+    
       <div className="relative w-full h-[70vh] overflow-hidden mt-16">
         <video
           src="/Assets/Video/Video Banner.mp4"
